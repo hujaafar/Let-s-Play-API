@@ -2,8 +2,9 @@
 
 ## Base URL
 ```
-http://localhost:8081
+https://localhost:8443
 ```
+Note: HTTPS uses a self-signed certificate. Disable SSL verification in Postman or your API client if needed.
 
 ---
 
@@ -21,7 +22,7 @@ http://localhost:8081
 
 ### 1.1 Register
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/auth/register`
+- **URL:** `https://localhost:8443/auth/register`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -44,7 +45,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 1.2 Login
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/auth/login`
+- **URL:** `https://localhost:8443/auth/login`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -65,7 +66,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 1.3 Register with invalid data (validation test)
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/auth/register`
+- **URL:** `https://localhost:8443/auth/register`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -87,7 +88,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 1.4 Register duplicate email (conflict test)
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/auth/register`
+- **URL:** `https://localhost:8443/auth/register`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -109,7 +110,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 1.5 Login with wrong password
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/auth/login`
+- **URL:** `https://localhost:8443/auth/login`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -132,7 +133,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 2.1 Get all products (public)
 - **Method:** `GET`
-- **URL:** `http://localhost:8081/products`
+- **URL:** `https://localhost:8443/products`
 - **Headers:** none required
 - **Expected Response:** `200 OK`
 ```json
@@ -143,7 +144,7 @@ Copy the token. You will use it for all authenticated requests.
 
 ### 2.2 Create product
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/products`
+- **URL:** `https://localhost:8443/products`
 - **Headers:**
   - `Content-Type: application/json`
   - `Authorization: Bearer <your_token>`
@@ -171,7 +172,7 @@ Copy the product `id` for update/delete requests.
 
 ### 2.3 Create product without token (auth test)
 - **Method:** `POST`
-- **URL:** `http://localhost:8081/products`
+- **URL:** `https://localhost:8443/products`
 - **Headers:**
   - `Content-Type: application/json`
 - **Body (raw JSON):**
@@ -188,7 +189,7 @@ Copy the product `id` for update/delete requests.
 
 ### 2.4 Get product by ID
 - **Method:** `GET`
-- **URL:** `http://localhost:8081/products/<product_id>`
+- **URL:** `https://localhost:8443/products/<product_id>`
 - **Headers:** none required
 - **Expected Response:** `200 OK`
 ```json
@@ -205,7 +206,7 @@ Copy the product `id` for update/delete requests.
 
 ### 2.5 Get product by invalid ID (not found test)
 - **Method:** `GET`
-- **URL:** `http://localhost:8081/products/000000000000000000000000`
+- **URL:** `https://localhost:8443/products/000000000000000000000000`
 - **Headers:** none required
 - **Expected Response:** `404 Not Found`
 ```json
@@ -218,7 +219,7 @@ Copy the product `id` for update/delete requests.
 
 ### 2.6 Update product (owner)
 - **Method:** `PUT`
-- **URL:** `http://localhost:8081/products/<product_id>`
+- **URL:** `https://localhost:8443/products/<product_id>`
 - **Headers:**
   - `Content-Type: application/json`
   - `Authorization: Bearer <your_token>`
@@ -245,7 +246,7 @@ Copy the product `id` for update/delete requests.
 
 ### 2.7 Delete product (owner)
 - **Method:** `DELETE`
-- **URL:** `http://localhost:8081/products/<product_id>`
+- **URL:** `https://localhost:8443/products/<product_id>`
 - **Headers:**
   - `Authorization: Bearer <your_token>`
 - **Expected Response:** `204 No Content` (empty body)
@@ -255,7 +256,7 @@ Copy the product `id` for update/delete requests.
 ### 2.8 Forbidden - delete another user's product (step-by-step)
 1. Register user A (John).
 Method: `POST`
-URL: `http://localhost:8081/auth/register`
+URL: `https://localhost:8443/auth/register`
 Headers: `Content-Type: application/json`
 Body:
 ```json
@@ -265,7 +266,7 @@ Expected: `201 Created` with `token`. Save it as `tokenA`.
 
 2. User A creates a product.
 Method: `POST`
-URL: `http://localhost:8081/products`
+URL: `https://localhost:8443/products`
 Headers: `Content-Type: application/json` and `Authorization: Bearer tokenA`
 Body:
 ```json
@@ -275,7 +276,7 @@ Expected: `201 Created`. Save `id` as `productId`.
 
 3. Register user B (Jane).
 Method: `POST`
-URL: `http://localhost:8081/auth/register`
+URL: `https://localhost:8443/auth/register`
 Headers: `Content-Type: application/json`
 Body:
 ```json
@@ -285,7 +286,7 @@ Expected: `201 Created` with `token`. Save it as `tokenB`.
 
 4. User B tries to delete John’s product.
 Method: `DELETE`
-URL: `http://localhost:8081/products/<productId>`
+URL: `https://localhost:8443/products/<productId>`
 Headers: `Authorization: Bearer tokenB`
 Expected: `403 Forbidden`
 ```json
@@ -299,7 +300,7 @@ Expected: `403 Forbidden`
 ### Admin setup (one time)
 1. Register an admin user.
 Method: `POST`
-URL: `http://localhost:8081/auth/register`
+URL: `https://localhost:8443/auth/register`
 Headers: `Content-Type: application/json`
 Body:
 ```json
@@ -312,7 +313,7 @@ Open `letsplay` database > `users` collection, edit the admin user and set:
 
 3. Login as admin and copy the token.
 Method: `POST`
-URL: `http://localhost:8081/auth/login`
+URL: `https://localhost:8443/auth/login`
 Headers: `Content-Type: application/json`
 Body:
 ```json
@@ -324,7 +325,7 @@ Expected: `200 OK` with `token`. Save it as `adminToken`.
 
 ### 3.1 Get all users
 Method: `GET`
-URL: `http://localhost:8081/users`
+URL: `https://localhost:8443/users`
 Headers: `Authorization: Bearer adminToken`
 Expected: `200 OK`
 
@@ -332,7 +333,7 @@ Expected: `200 OK`
 
 ### 3.2 Get user by ID
 Method: `GET`
-URL: `http://localhost:8081/users/<user_id>`
+URL: `https://localhost:8443/users/<user_id>`
 Headers: `Authorization: Bearer adminToken`
 Expected: `200 OK`
 
@@ -340,7 +341,7 @@ Expected: `200 OK`
 
 ### 3.3 Update user
 Method: `PUT`
-URL: `http://localhost:8081/users/<user_id>`
+URL: `https://localhost:8443/users/<user_id>`
 Headers: `Content-Type: application/json` and `Authorization: Bearer adminToken`
 Body:
 ```json
@@ -357,7 +358,7 @@ Expected: `200 OK`
 
 ### 3.4 Delete user
 Method: `DELETE`
-URL: `http://localhost:8081/users/<user_id>`
+URL: `https://localhost:8443/users/<user_id>`
 Headers: `Authorization: Bearer adminToken`
 Expected: `204 No Content`
 
@@ -365,7 +366,7 @@ Expected: `204 No Content`
 
 ### 3.5 Access users as normal user (forbidden)
 Method: `GET`
-URL: `http://localhost:8081/users`
+URL: `https://localhost:8443/users`
 Headers: `Authorization: Bearer tokenA`
 Expected: `403 Forbidden`
 ```json
@@ -373,4 +374,3 @@ Expected: `403 Forbidden`
 ```
 
 ---
-
